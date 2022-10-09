@@ -7,29 +7,36 @@
 
 import UIKit
 
-class ContactListViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class ContactListViewController: UIViewController {
 
     @IBOutlet weak var tbl_Contacts: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     var contacts = [Contacts]()
+    var searchList = [Contacts]()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "Contacts"
-        downloadJson {
+        NetworkManager.shared.downloadContactList { contactJson in
+            self.contacts = contactJson
+            self.searchList = contactJson
             self.tbl_Contacts.reloadData()
         }
         tbl_Contacts.delegate = self
         tbl_Contacts.dataSource = self
-
-        // Do any additional setup after loading the view.
+        searchBar.delegate = self
     }
-    
+}
+
+extension ContactListViewController: UITableViewDelegate, UITableViewDataSource{
+   
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return contacts.count
+        return searchList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
-        cell.textLabel?.text = contacts[indexPath.row].firstName + " " + contacts[indexPath.row].lastName
+        cell.textLabel?.text = searchList[indexPath.row].firstName + " " + searchList[indexPath.row].lastName
         return cell
     }
     
@@ -39,25 +46,29 @@ class ContactListViewController: UIViewController,UITableViewDataSource,UITableV
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destination = segue.destination as? ContactDetailsViewController {
-            destination.contact = contacts[(tbl_Contacts.indexPathForSelectedRow?.row)!]
+            destination.contact = searchList[(tbl_Contacts.indexPathForSelectedRow?.row)!]
         }
-    }
-
-    func downloadJson(completed: @escaping () -> ()) {
-        let url = URL(string: "https:/61e947967bc0550017bc61bf.mockapi.io/api/v1/people")
-        URLSession.shared.dataTask(with: url!) { (data, response, error) in
-            if error == nil {
-                do {
-                    self.contacts = try JSONDecoder().decode([Contacts].self, from: data!)
-                    DispatchQueue.main.async {
-                        completed()
-                    }
-                }catch {
-                    print("JSON Error")
-                }
-            }
-        }.resume()
     }
 }
 
+extension ContactListViewController: UISearchBarDelegate{
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar)
+    {
+        searchBar.text = ""
+        searchList = contacts
+        searchBar.endEditing(true)
+        tbl_Contacts.reloadData()
+    }
 
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
+    {
+        searchList = searchText.isEmpty ? contacts : contacts.filter
+        {
+            (item: Contacts) -> Bool in
+            let name = item.firstName + " " + item.lastName
+            return name.range(of: searchText, options: .caseInsensitive, range: nil,locale: nil) != nil
+        }
+        tbl_Contacts.reloadData()
+    }
+}

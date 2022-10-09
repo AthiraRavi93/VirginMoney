@@ -24,6 +24,7 @@
 		3B0458A328F3071D006DA5EF /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B0458A228F3071D006DA5EF /* Room.swift */; };
 		3B35803E28F33BCE0086C102 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B35803D28F33BCE0086C102 /* Utilities.swift */; };
 		3B35804028F374D50086C102 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B35803F28F374D50086C102 /* TabBarController.swift */; };
+		3B35804628F390D40086C102 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B35804528F390D40086C102 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		3B0458A228F3071D006DA5EF /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		3B35803D28F33BCE0086C102 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		3B35803F28F374D50086C102 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		3B35804528F390D40086C102 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +117,7 @@
 		3B04586428F2E3FC006DA5EF /* VirginMoney */ = {
 			isa = PBXGroup;
 			children = (
+				3B35804428F390BA0086C102 /* Network */,
 				3B04589B28F2ED76006DA5EF /* Models */,
 				3B04589828F2E44A006DA5EF /* ViewControllers */,
 				3B04586528F2E3FC006DA5EF /* AppDelegate.swift */,
@@ -165,6 +168,14 @@
 				3B0458A228F3071D006DA5EF /* Room.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		3B35804428F390BA0086C102 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				3B35804528F390D40086C102 /* NetworkManager.swift */,
+			);
+			path = Network;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3B35804628F390D40086C102 /* NetworkManager.swift in Sources */,
 				3B04586A28F2E3FC006DA5EF /* ViewController.swift in Sources */,
 				3B04589F28F2FD3C006DA5EF /* ContactDetailsViewController.swift in Sources */,
 				3B35804028F374D50086C102 /* TabBarController.swift in Sources */,
